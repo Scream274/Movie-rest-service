@@ -1,4 +1,4 @@
-package ua.com.foxminded.Movie.rest.service;
+package ua.com.foxminded.Movie_rest_service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

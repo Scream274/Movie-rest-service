@@ -1,4 +1,4 @@
-package ua.com.foxminded.Movie.rest.service;
+package ua.com.foxminded.Movie_rest_service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

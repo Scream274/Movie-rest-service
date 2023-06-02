@@ -1,6 +1,7 @@
 package ua.com.foxminded.Movie_rest_service.services.impl;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.foxminded.Movie_rest_service.models.Person;
 import ua.com.foxminded.Movie_rest_service.repositories.PersonRepository;
@@ -9,6 +10,7 @@ import ua.com.foxminded.Movie_rest_service.services.PersonService;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class PersonServiceImpl implements PersonService {
 
     private final PersonRepository personRepository;

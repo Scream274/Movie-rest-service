@@ -11,15 +11,16 @@ import lombok.*;
 @ToString
 @EqualsAndHashCode
 @Table(name = "movies_persons")
-@IdClass(MoviePersonId.class)
 public class MoviePerson {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @ManyToOne
     @JoinColumn(name = "movie_id")
     private Movie movie;
 
-    @Id
     @ManyToOne
     @JoinColumn(name = "person_id")
     private Person person;

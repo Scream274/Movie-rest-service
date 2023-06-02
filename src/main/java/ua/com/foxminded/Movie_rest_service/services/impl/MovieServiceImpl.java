@@ -1,14 +1,16 @@
 package ua.com.foxminded.Movie_rest_service.services.impl;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.foxminded.Movie_rest_service.models.Movie;
 import ua.com.foxminded.Movie_rest_service.repositories.MovieRepository;
 import ua.com.foxminded.Movie_rest_service.services.MovieService;
+import ua.com.foxminded.Movie_rest_service.utils.exceptions.MoviesNotFoundException;
 
 import java.util.List;
-import java.util.Optional;
 
+@Service
 public class MovieServiceImpl implements MovieService {
 
     private final MovieRepository movieRepository;
@@ -25,8 +27,8 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     @Transactional
-    public Optional<Movie> findById(Long id) {
-        return movieRepository.findById(id);
+    public Movie findById(Long id) {
+        return movieRepository.findById(id).orElseThrow(() -> new MoviesNotFoundException("Movie with id " + id + " was not found!"));
     }
 
     @Override

@@ -25,4 +25,6 @@ public class MovieDTO {
     private Integer runtimeMinutes;
 
     private String genres;
+
+    private Double rate;
 }

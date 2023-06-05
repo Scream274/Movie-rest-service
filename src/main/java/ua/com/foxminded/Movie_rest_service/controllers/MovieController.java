@@ -40,7 +40,7 @@ public class MovieController {
     }
 
     @GetMapping("/{id}")
-    public MovieDTO getCarByNumber(@PathVariable("id") String id) {
+    public MovieDTO getMovieByNumber(@PathVariable("id") String id) {
         return convertToDTO(movieService.findById(Long.valueOf(id)));
     }
 }

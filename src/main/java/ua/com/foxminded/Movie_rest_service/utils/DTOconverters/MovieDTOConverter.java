@@ -3,9 +3,17 @@ package ua.com.foxminded.Movie_rest_service.utils.DTOconverters;
 import org.springframework.stereotype.Service;
 import ua.com.foxminded.Movie_rest_service.DTO.MovieDTO;
 import ua.com.foxminded.Movie_rest_service.models.Movie;
+import ua.com.foxminded.Movie_rest_service.models.Rating;
+import ua.com.foxminded.Movie_rest_service.services.RatingService;
 
 @Service
 public class MovieDTOConverter {
+
+    private static RatingService ratingService;
+
+    public MovieDTOConverter(RatingService ratingService) {
+        MovieDTOConverter.ratingService = ratingService;
+    }
 
     public static MovieDTO convertToDTO(Movie movie) {
         MovieDTO movieDTO = new MovieDTO();
@@ -25,8 +33,23 @@ public class MovieDTOConverter {
 
     public static Movie convertFromDTO(MovieDTO movieDTO) {
 
-        //TODO
         Movie movie = new Movie();
+        movie.setOriginalTitle(movieDTO.getOriginalTitle());
+        movie.setPrimaryTitle(movieDTO.getPrimaryTitle());
+        movie.setType(movieDTO.getType());
+        movie.setGenres(movieDTO.getGenres());
+        movie.setIsAdult(movieDTO.getIsAdult());
+        movie.setRuntimeMinutes(movieDTO.getRuntimeMinutes());
+        movie.setStartYear(movieDTO.getStartYear());
+        movie.setEndYear(movieDTO.getEndYear());
+
+        Rating rating = new Rating();
+        rating.setVotes(0);
+        rating.setRate(0D);
+        ratingService.add(rating);
+
+        movie.setRating(rating);
+
         return movie;
     }
 }

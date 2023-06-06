@@ -6,9 +6,9 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.com.foxminded.Movie_rest_service.models.Movie;
 import ua.com.foxminded.Movie_rest_service.repositories.MovieRepository;
 import ua.com.foxminded.Movie_rest_service.services.MovieService;
-import ua.com.foxminded.Movie_rest_service.utils.exceptions.MoviesNotFoundException;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MovieServiceImpl implements MovieService {
@@ -27,8 +27,8 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     @Transactional
-    public Movie findById(Long id) {
-        return movieRepository.findById(id).orElseThrow(() -> new MoviesNotFoundException("Movie with id " + id + " was not found!"));
+    public Optional<Movie> findById(Long id) {
+        return movieRepository.findById(id);
     }
 
     @Override

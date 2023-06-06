@@ -19,9 +19,13 @@ public class PersonDTOConverter {
     }
 
     public static Person convertFromDTO(PersonDTO personDTO) {
-
-        //TODO
         Person person = new Person();
+
+        person.setProfession(personDTO.getProfession());
+        person.setName(personDTO.getName());
+        person.setBirthYear(personDTO.getBirthYear());
+        person.setDeathYear(personDTO.getDeathYear());
+
         return person;
     }
 }

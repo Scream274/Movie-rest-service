@@ -6,9 +6,9 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.com.foxminded.Movie_rest_service.models.Person;
 import ua.com.foxminded.Movie_rest_service.repositories.PersonRepository;
 import ua.com.foxminded.Movie_rest_service.services.PersonService;
-import ua.com.foxminded.Movie_rest_service.utils.exceptions.PersonsNotFoundException;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PersonServiceImpl implements PersonService {
@@ -27,8 +27,8 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     @Transactional
-    public Person findById(Long id) {
-        return personRepository.findById(id).orElseThrow(()-> new PersonsNotFoundException("Person with id " + id + " was not found!"));
+    public Optional<Person> findById(Long id) {
+        return personRepository.findById(id);
     }
 
     @Override

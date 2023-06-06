@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.com.foxminded.Movie_rest_service.models.Movie;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public interface MovieService {
@@ -13,7 +14,7 @@ public interface MovieService {
     List<Movie> findAll(Pageable pageable);
 
     @Transactional
-    Movie findById(Long id);
+    Optional<Movie> findById(Long id);
 
     @Transactional
     void deleteById(Long id);

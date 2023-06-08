@@ -19,7 +19,6 @@ import java.util.stream.Collectors;
 import static ua.com.foxminded.Movie_rest_service.utils.DTOconverters.PersonDTOConverter.convertFromDTO;
 import static ua.com.foxminded.Movie_rest_service.utils.DTOconverters.PersonDTOConverter.convertToDTO;
 
-@CrossOrigin
 @RestController
 @RequestMapping("/api/v1/persons")
 public class PersonController {

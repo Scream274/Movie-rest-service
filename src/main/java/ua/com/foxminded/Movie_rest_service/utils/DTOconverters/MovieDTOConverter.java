@@ -26,7 +26,10 @@ public class MovieDTOConverter {
         movieDTO.setStartYear(movie.getStartYear());
         movieDTO.setEndYear(movie.getEndYear());
         movieDTO.setRuntimeMinutes(movie.getRuntimeMinutes());
-        movieDTO.setRate(movie.getRating().getRate());
+
+        if (movie.getRating() != null) {
+            movieDTO.setRate(movie.getRating().getRate());
+        }
 
         return movieDTO;
     }

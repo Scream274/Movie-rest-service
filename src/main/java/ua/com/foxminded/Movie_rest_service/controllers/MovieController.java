@@ -19,7 +19,6 @@ import java.util.stream.Collectors;
 import static ua.com.foxminded.Movie_rest_service.utils.DTOconverters.MovieDTOConverter.convertFromDTO;
 import static ua.com.foxminded.Movie_rest_service.utils.DTOconverters.MovieDTOConverter.convertToDTO;
 
-@CrossOrigin
 @RestController
 @RequestMapping("/api/v1/movies")
 public class MovieController {

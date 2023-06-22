@@ -1,5 +1,12 @@
 package ua.com.foxminded.Movie_rest_service.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -34,6 +41,13 @@ public class MovieController {
         this.ratingService = ratingService;
     }
 
+    @Operation(summary = "Get all movies")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found all movies",
+                    content = {@Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = MovieDTO.class)))}),
+            @ApiResponse(responseCode = "404", description = "Movies not found",
+                    content = @Content(mediaType = "application/json"))})
     @GetMapping
     public List<MovieDTO> getAllMovies(@RequestParam(defaultValue = "0") int page) {
 
@@ -47,12 +61,20 @@ public class MovieController {
         return movies.stream().map(MovieDTOConverter::convertToDTO).collect(Collectors.toList());
     }
 
+    @Operation(summary = "Get movie by its Id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found the movie",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = MovieDTO.class))}),
+            @ApiResponse(responseCode = "404", description = "Movies not found",
+                    content = @Content(mediaType = "application/json"))})
     @GetMapping("/{id}")
     public MovieDTO getMovieByNumber(@PathVariable("id") String id) {
         return convertToDTO(movieService.findById(Long.valueOf(id))
                 .orElseThrow(() -> new MoviesNotFoundException("Movie with id " + id + " was not found!")));
     }
 
+    @Operation(summary = "Add new movie", security = @SecurityRequirement(name = "bearerAuth"))
     @PostMapping
     public ResponseEntity<?> addNewMovie(@RequestBody MovieDTO movieDTO) {
         Movie movie = convertFromDTO(movieDTO);
@@ -66,6 +88,7 @@ public class MovieController {
         return ResponseEntity.created(URI.create("/movies/" + movie.getId())).build();
     }
 
+    @Operation(summary = "Update movie by Id", security = @SecurityRequirement(name = "bearerAuth"))
     @PutMapping("/{id}")
     public ResponseEntity<?> updateMovie(@PathVariable("id") String id, @RequestBody MovieDTO movieDTO) {
         Movie oldMovie = movieService.findById(Long.valueOf(id))
@@ -76,6 +99,14 @@ public class MovieController {
         return ResponseEntity.ok(oldMovie);
     }
 
+    @Operation(summary = "Delete movie by Id", security = @SecurityRequirement(name = "bearerAuth"))
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Delete the movie",
+                    content = @Content),
+            @ApiResponse(responseCode = "400", description = "Movie was not deleted",
+                    content = @Content(mediaType = "text/plain")),
+            @ApiResponse(responseCode = "404", description = "Movie not found",
+                    content = @Content(mediaType = "application/json"))})
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteMovie(@PathVariable("id") String id) {
         if (!movieService.isExists(Long.valueOf(id))) {
@@ -91,6 +122,7 @@ public class MovieController {
         return ResponseEntity.noContent().build();
     }
 
+    @Operation(summary = "Update movies rating")
     @PutMapping("/{id}/rating")
     public ResponseEntity<?> updateMovieRating(@PathVariable("id") String id, @RequestBody Integer rate) {
         Movie movie = movieService.findById(Long.valueOf(id)).orElseThrow(() -> new MoviesNotFoundException("Movie with id " + id + " was not found!"));

@@ -7,7 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ua.com.foxminded.Movie_rest_service.DTO.MovieDTO;
 import ua.com.foxminded.Movie_rest_service.models.Movie;
+import ua.com.foxminded.Movie_rest_service.models.Rating;
 import ua.com.foxminded.Movie_rest_service.services.MovieService;
+import ua.com.foxminded.Movie_rest_service.services.RatingService;
 import ua.com.foxminded.Movie_rest_service.utils.DTOconverters.MovieDTOConverter;
 import ua.com.foxminded.Movie_rest_service.utils.exceptions.MovieDataException;
 import ua.com.foxminded.Movie_rest_service.utils.exceptions.MoviesNotFoundException;
@@ -24,10 +26,12 @@ import static ua.com.foxminded.Movie_rest_service.utils.DTOconverters.MovieDTOCo
 public class MovieController {
 
     private final MovieService movieService;
+    private final RatingService ratingService;
     private final int PAGE_SIZE = 5;
 
-    public MovieController(MovieService movieService) {
+    public MovieController(MovieService movieService, RatingService ratingService) {
         this.movieService = movieService;
+        this.ratingService = ratingService;
     }
 
     @GetMapping
@@ -77,7 +81,7 @@ public class MovieController {
         if (!movieService.isExists(Long.valueOf(id))) {
             throw new MoviesNotFoundException("Movie with id " + id + " was not found!");
         }
-        
+
         movieService.deleteById(Long.valueOf(id));
 
         if (movieService.isExists(Long.valueOf(id))) {
@@ -85,5 +89,22 @@ public class MovieController {
         }
 
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}/rating")
+    public ResponseEntity<?> updateMovieRating(@PathVariable("id") String id, @RequestBody Integer rate) {
+        Movie movie = movieService.findById(Long.valueOf(id)).orElseThrow(() -> new MoviesNotFoundException("Movie with id " + id + " was not found!"));
+
+        Rating rating = movie.getRating();
+
+        if (rating == null) {
+            rating = new Rating(Long.valueOf(id), Double.valueOf(rate), 1);
+            movie.setRating(rating);
+            movieService.add(movie);
+        } else {
+            ratingService.update(rating, rate);
+        }
+
+        return ResponseEntity.ok(rating);
     }
 }

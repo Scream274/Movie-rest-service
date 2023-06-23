@@ -25,4 +25,8 @@ public class MovieDTO {
     private String genres;
 
     private Double rate;
+
+    public MovieDTO(String primaryTitle) {
+        this.primaryTitle = primaryTitle;
+    }
 }

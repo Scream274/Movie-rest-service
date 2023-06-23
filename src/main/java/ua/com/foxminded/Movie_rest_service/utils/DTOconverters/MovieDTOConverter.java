@@ -55,4 +55,8 @@ public class MovieDTOConverter {
 
         return movie;
     }
+
+    public static void setRatingService(RatingService ratingService){
+        MovieDTOConverter.ratingService = ratingService;
+    }
 }

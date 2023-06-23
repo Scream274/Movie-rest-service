@@ -20,8 +20,6 @@ public class RatingServiceImpl implements RatingService {
     @Override
     @Transactional
     public void add(Rating rating) {
-        System.out.println("Rate id: " + rating.getId());
-
         ratingRepository.save(rating);
     }
 

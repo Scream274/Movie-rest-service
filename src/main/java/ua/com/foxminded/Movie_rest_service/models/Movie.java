@@ -50,4 +50,9 @@ public class Movie {
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MoviePerson> moviePersons = new ArrayList<>();
+
+    public Movie(Long id, String primaryTitle) {
+        this.primaryTitle = primaryTitle;
+        this.id = id;
+    }
 }

@@ -96,7 +96,7 @@ public class MovieController {
         Movie newMovie = convertFromDTO(movieDTO);
 
         movieService.update(oldMovie, newMovie);
-        return ResponseEntity.ok(oldMovie);
+        return ResponseEntity.ok(newMovie);
     }
 
     @Operation(summary = "Delete movie by Id", security = @SecurityRequirement(name = "bearerAuth"))

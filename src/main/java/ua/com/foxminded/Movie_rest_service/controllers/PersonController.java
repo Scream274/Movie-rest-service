@@ -91,7 +91,7 @@ public class PersonController {
         Person newPerson = convertFromDTO(personDTO);
 
         personService.update(oldPerson, newPerson);
-        return ResponseEntity.ok(oldPerson);
+        return ResponseEntity.ok(newPerson);
     }
 
     @Operation(summary = "Delete person by Id", security = @SecurityRequirement(name = "bearerAuth"))

@@ -14,4 +14,8 @@ public class PersonDTO {
     private Integer birthYear;
     private Integer deathYear;
     private String profession;
+
+    public PersonDTO(String name) {
+        this.name = name;
+    }
 }

@@ -34,4 +34,9 @@ public class Person {
 
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MoviePerson> moviePersons = new ArrayList<>();
+
+    public Person(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }

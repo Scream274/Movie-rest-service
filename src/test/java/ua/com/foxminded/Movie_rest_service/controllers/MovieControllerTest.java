@@ -46,12 +46,14 @@ public class MovieControllerTest {
 
     private Movie movie1;
     private Movie movie2;
+    private Movie movie3;
 
     @BeforeAll
     public void setUp() {
         MovieDTOConverter.setRatingService(ratingService);
         movie1 = new Movie(1L,"Movie 1 - Title");
         movie2 = new Movie(2L,"Movie 2 - Super title");
+        movie3 = new Movie(3L,"Movie 3 - X title");
     }
 
     @Test
@@ -145,10 +147,10 @@ public class MovieControllerTest {
     @Test
     @WithMockUser
     public void whenPutUpdateMovieRatingWhenMovieWithNoRateYetShouldCreateMovieRatingInDbAndReturnOk() throws Exception {
-        Long movieId = movie1.getId();
+        Long movieId = movie3.getId();
         Integer rate = 5;
 
-        when(movieService.findById(movieId)).thenReturn(Optional.ofNullable(movie1));
+        when(movieService.findById(movieId)).thenReturn(Optional.ofNullable(movie3));
 
         mockMvc.perform(put("/api/v1/movies/{id}/rating", movieId)
                         .contentType(MediaType.APPLICATION_JSON)

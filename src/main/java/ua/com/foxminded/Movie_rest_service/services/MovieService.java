@@ -27,4 +27,7 @@ public interface MovieService {
 
     @Transactional
     boolean isExists(Long id);
+
+    @Transactional
+    Optional<Movie> getRandom();
 }

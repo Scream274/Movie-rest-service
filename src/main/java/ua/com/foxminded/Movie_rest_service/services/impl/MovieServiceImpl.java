@@ -63,4 +63,9 @@ public class MovieServiceImpl implements MovieService {
     public boolean isExists(Long id) {
         return movieRepository.existsById(id);
     }
+
+    @Override
+    public Optional<Movie> getRandom() {
+        return movieRepository.findRandom();
+    }
 }

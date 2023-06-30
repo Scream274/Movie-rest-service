@@ -74,6 +74,19 @@ public class MovieController {
                 .orElseThrow(() -> new MoviesNotFoundException("Movie with id " + id + " was not found!")));
     }
 
+    @Operation(summary = "Get random movie")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found random movie",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = MovieDTO.class))}),
+            @ApiResponse(responseCode = "404", description = "Movies not found",
+                    content = @Content(mediaType = "application/json"))})
+    @GetMapping("/random")
+    public MovieDTO getRandomMovie() {
+        return convertToDTO(movieService.getRandom()
+                .orElseThrow(() -> new MoviesNotFoundException("Movie was not found!")));
+    }
+
     @Operation(summary = "Add new movie", security = @SecurityRequirement(name = "bearerAuth"))
     @PostMapping
     public ResponseEntity<?> addNewMovie(@RequestBody MovieDTO movieDTO) {
